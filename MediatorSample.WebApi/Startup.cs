@@ -24,11 +24,18 @@ namespace MediatorSample.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //SQL Connection 
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName)));
-            
+
+            //Oracle Connection 
+            services.AddDbContext<ApplicationContext>(options =>
+                options.UseOracle(
+                    Configuration.GetConnectionString("OracleConnection"),
+                    b => b.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName)));
+
             #region Swagger
             services.AddSwaggerGen(c =>
             {
