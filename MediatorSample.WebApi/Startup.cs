@@ -1,5 +1,7 @@
 
+using FluentValidation;
 using MediatorSample.WebApi.Infrastructure.Context;
+using MediatorSample.WebApi.PipelineBehaviours;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,12 +50,18 @@ namespace MediatorSample.WebApi
 
             });
             #endregion
+          
 
             services.AddScoped<IApplicationContext>(provider => provider.GetService<ApplicationContext>());
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddControllers();
+
+            services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
