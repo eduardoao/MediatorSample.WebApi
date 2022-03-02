@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace MediatorSample.WebApi.Controllers
 {
+    //Teste para troca de branch
+
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
