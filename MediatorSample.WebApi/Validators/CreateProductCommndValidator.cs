@@ -7,8 +7,8 @@ namespace MediatorSample.WebApi.Validators
     {
         public CreateProductCommndValidator()
         {
-            RuleFor(c => c.Barcode).NotEmpty();
-            RuleFor(c => c.Name).NotEmpty();
+            RuleFor(c => c.Barcode).NotEmpty().WithMessage("O campo Barcode deve ser preenchido!");
+            RuleFor(c => c.Name).NotEmpty().WithMessage("O campo Nome deve ser preenchido!");
         }
 
     }

@@ -4,12 +4,15 @@ using MediatorSample.WebApi.Infrastructure.Context;
 using MediatorSample.WebApi.PipelineBehaviours;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Net;
 using System.Reflection;
 
 namespace MediatorSample.WebApi
@@ -62,6 +65,8 @@ namespace MediatorSample.WebApi
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,10 +95,31 @@ namespace MediatorSample.WebApi
             });
             #endregion
 
+
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            //app.UseExceptionHandler(
+            //     options =>
+            //     {
+            //         options.Run(async context =>
+            //         {
+            //             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            //             context.Response.ContentType = "text/html";
+            //             var exceptionObject = context.Features.Get<IExceptionHandlerFeature>();
+            //             if (null != exceptionObject)
+            //             {
+            //                 var errorMessage = $"{exceptionObject.Error.Message}";
+            //                 await context.Response.WriteAsync(errorMessage).ConfigureAwait(false);
+            //             }
+            //         });
+            //     });
+
+         
         }
     }
 }
