@@ -1,4 +1,5 @@
-# CQRS.WebApi
+# 
+MediatorSample.WebApi
 Here is an implementation of CQRS with MediatR in ASP.NET Core 5.0. Read the step by step guide in my blog post.
 https://www.codewithmukesh.com/blog/cqrs-in-asp-dot-net-core-3-1/ --< Thanks Mukesh :) 
 
